@@ -1,0 +1,194 @@
+//drawback of single thread apps
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main (string[] args)
+                {
+            Method1();
+            Console.WriteLine("Method 1 Execution has been completed!!");
+            Method2();
+            Console.WriteLine("Method 2 Execution has been completed!!");
+            Method3();
+            Console.WriteLine("Method 3 Execution has been completed!!");
+            Console.ReadLine();        
+        }
+        static void Method1()
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                Console.WriteLine("Method 1:" + i);
+            }
+        }
+        static void Method2() { 
+        for(int i=1; i <= 5; i++)
+            {
+                Console.WriteLine("Method 2:" + i);
+                if (i == 2)
+                {
+                    Console.WriteLine("executing code started");
+                    //sleep for 10 seconds
+                    Thread.Sleep(10000);
+                    Console.WriteLine("Execting code Completed");
+                }
+            }
+                }
+        static void Method3() {
+
+            for (int i = 1; i <= 5; i++)
+            {
+                Console.WriteLine("Method 3:" + i);
+            }
+        }
+    }
+}
+******************************************************************
+concept of multi threading
+*****************************************************************
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main (string[] args)
+                {
+            //creating thread
+            Thread t1 = new Thread(Method1)
+            {
+                Name = "Thread1"
+            };
+            
+            Thread t2 = new Thread(Method2)
+            {
+                Name = "Thread2"
+            };
+
+            Thread t3 = new Thread(Method3)
+            {
+                Name = "Thread3"
+            };
+            t1.Start();
+            t2.Start();
+            t3.Start();
+            Console.WriteLine("Main Thread Ended");
+            Console.ReadLine();
+        }
+        static void Method1()
+        {
+            Console.WriteLine("Method 1 started Using" + Thread.CurrentThread.Name);
+
+            for (int i = 1; i <= 5; i++)
+            {
+                Console.WriteLine("Method 1:" + i);
+            }
+            Console.WriteLine("Method 1 Ended Using"+Thread.CurrentThread.Name);
+        }
+        static void Method2() {
+            Console.WriteLine("Method 2 started Using" + Thread.CurrentThread.Name);
+            for (int i=1; i <= 5; i++)
+            {
+                Console.WriteLine("Method 2:" + i);
+                if (i == 2)
+                {
+                    Console.WriteLine("method 2 db started");
+                    //sleep for 10 seconds
+                    Thread.Sleep(1000);
+                    Console.WriteLine("method2 db Completed");
+                }
+            }
+            Console.WriteLine("Method 2 ended Using" + Thread.CurrentThread.Name);
+        }
+        static void Method3() {
+            Console.WriteLine("Method 3 started Using" + Thread.CurrentThread.Name);
+
+            for (int i = 1; i <= 5; i++)
+            {
+                Console.WriteLine("Method 3:" + i);
+            }
+            Console.WriteLine("Method 3 ended  Using" + Thread.CurrentThread.Name);
+        }
+    }
+}
+*******************************************************************************************
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main (String[] args)
+        {
+            showNumbers();
+            Console.ReadLine();
+        }
+
+        static void showNumbers()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine(i);
+            }
+        }
+    }
+}
+*************************************************
+//to call a function through delegate (1)
+
+class Program
+    {
+        static void Main (String[] args)
+        {
+            ThreadStart obj = new ThreadStart(showNumbers);
+            Thread t = new Thread(obj);
+            t.Start();
+            Console.ReadLine();
+
+        }
+
+        static void showNumbers()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine(i);
+            }
+        }
+****************************************************
+//to call a function through delegate (2)
+
+ static void Main (String[] args)
+        {
+            // ThreadStart obj = new ThreadStart(showNumbers);
+            ThreadStart obj = showNumbers;
+            Thread t = new Thread(obj);
+            t.Start();
+            Console.ReadLine();
+
+        }
+
+        static void showNumbers()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine(i);
+            }
+        }
+***********************************
