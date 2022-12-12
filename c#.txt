@@ -346,7 +346,7 @@ static void Main (String[] args)
             Console.WriteLine(" MEthod 2 Execution started");
         }
 *********************************************************************
-//print 2 table
+//printing table of 2
 
 static void Main(string[] args)
         {
