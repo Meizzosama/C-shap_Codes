@@ -364,3 +364,25 @@ static void Main(string[] args)
                 Console.WriteLine(table + " * " + i + " = " + (table * i));
         }
 *************************************************************
+//when the methods completes, the Console.WriteLine code will show a message containing the ID of the task that finished first. Based on the code, TaskB will finish first.//
+
+class Program
+    {
+        static void MethodA() { Thread.SpinWait(int.MaxValue); }
+        static void MethodB() { Thread.SpinWait(int.MaxValue / 2); }
+        static void Main(string[] args)
+        {
+            var TaskA = Task.Factory.StartNew(MethodA);
+            var TaskB = Task.Factory.StartNew(MethodB);
+            Console.WriteLine("TaskA id = {0}", TaskA.Id);
+            Console.WriteLine("TaskB id = {0}", TaskB.Id);
+            var tasks = new Task[] { TaskA, TaskB };
+            int whichTask = Task.WaitAny(tasks);
+            Console.WriteLine("Task {0} is the gold medal task.",
+            tasks[whichTask].Id);
+            Console.WriteLine("Press enter to exit");
+            Console.ReadLine();
+        }
+    }
+********************************************************************
+
